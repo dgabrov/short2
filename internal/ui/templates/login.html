@@ -1,16 +1,22 @@
+{{define "content"}}
 <div class="content">
-    <h2>Add URL</h2>
-    <form action="/addurl">
+    <h2>Login</h2>
+    <form action="/login">
         <table>
             <tr>
-                <td>Url: <input type="text"></td>
+                <td>Login:</td>
+                <td><input name="login" type="text" value="{{.Login}}"></td>
             </tr>
             <tr>
-                <td>Shortened: <span class="short">https://cbox.info/s/?id=laskdjflaskdjflasjk</span> <a href="#">Copy</a></td>
+                <td>Password:</td>
+                <td><input name="password" type="password"></td>
             </tr>
             <tr>
-                <td><button>Shorten</button></td>
+                <td>&nbsp;</td>
+                <td><button type="submit">Submit</button></td>
             </tr>
         </table>
     </form>
 </div>
+
+{{end}}

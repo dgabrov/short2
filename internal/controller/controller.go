@@ -9,15 +9,22 @@ import (
 )
 
 type Controller struct {
+	configData *data.ConfigData
+	db         *sql.DB
+	templates  map[string]*template.Template
 }
 
-func NewController() *Controller {
-	return &Controller{}
+func NewController(configData *data.ConfigData, db *sql.DB, templates map[string]*template.Template) *Controller {
+	return &Controller{
+		configData: configData,
+		db:         db,
+		templates:  templates,
+	}
 }
 
 func StartServer(cfg *data.ConfigData, db *sql.DB, templates map[string]*template.Template) error {
 	ctx := cfg.Context
-	ctrl := NewController()
+	ctrl := NewController(cfg, db, templates)
 
 	mux := http.NewServeMux()
 	mux.Handle("GET "+ctx+"/static/", http.StripPrefix(ctx, ui.StaticHandler()))

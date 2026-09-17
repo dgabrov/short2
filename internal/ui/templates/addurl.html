@@ -1,12 +1,13 @@
+{{define "content"}}
 <div class="content">
     <h2>Add URL</h2>
     <form action="/addurl">
         <table>
             <tr>
-                <td>Url: <input type="text"></td>
+                <td>Url: <input type="text" value="{{.LongUrl}}"></td>
             </tr>
             <tr>
-                <td>Shortened: <span class="short">https://cbox.info/s/?id=laskdjflaskdjflasjk</span> <a href="#">Copy</a></td>
+                <td>Shortened: {{if .ShowShort}}<span class="short">{{.ShortUrl}}</span> <a href="#">Copy</a>{{else}}&nbsp;{{end}}</td>
             </tr>
             <tr>
                 <td><button>Shorten</button></td>
@@ -14,3 +15,4 @@
         </table>
     </form>
 </div>
+{{end}}
