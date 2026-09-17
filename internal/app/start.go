@@ -9,6 +9,7 @@ import (
 	"os"
 	"short2/internal/controller"
 	"short2/internal/data"
+	"short2/internal/ui"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -25,8 +26,14 @@ func Start() error {
 		return err
 	}
 
+	// parse the templates to have them
+	templates, err := ui.ParseItems()
+	if err != nil {
+		return err
+	}
+
 	// let's start the http service
-	err = controller.StartServer(cfg, db)
+	err = controller.StartServer(cfg, db, templates)
 
 	defer db.Close()
 
