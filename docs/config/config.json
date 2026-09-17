@@ -1,0 +1,11 @@
+{
+  "serverAddress": "localhost:8080",
+  "context": "/short",
+  "db": {
+    "machine": "localhost",
+    "port": 3306,
+    "database": "short2",
+    "login": "short2",
+    "password": "short2"
+  }
+}
