@@ -49,10 +49,14 @@ body {
     opacity: 0.8;
 }
 
-.header svg {
+.header .icon {
+    display: inline-block;
     width: 32px;
     height: 32px;
-    fill: white;
+    background-image: url('../static/icon-link.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .content {
