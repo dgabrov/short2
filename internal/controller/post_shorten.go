@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"short2/internal/server"
 	"short2/internal/ui"
@@ -37,6 +38,8 @@ func (c *Controller) postShorten(w http.ResponseWriter, r *http.Request) {
 
 	servr := server.NewServer(c.configData, c.db)
 	shortUrl, err := servr.ShortenAndSave(userID, longUrl)
+
+	shortUrl = fmt.Sprintf("%s%s/%s", c.configData.ShortUrlPrefix, c.configData.Context, shortUrl)
 
 	if err != nil {
 		_ = ui.RenderAddUrl(w, c.templates, &ui.AddUrlView{

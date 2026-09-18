@@ -41,7 +41,7 @@ func Start() error {
 }
 
 func connectToDb(dbconfig *data.DbConfig) (*sql.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbconfig.Login, dbconfig.Password, dbconfig.Machine, dbconfig.Port, dbconfig.Database)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true", dbconfig.Login, dbconfig.Password, dbconfig.Machine, dbconfig.Port, dbconfig.Database)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err

@@ -5,6 +5,7 @@ type ConfigData struct {
 	Context        string
 	AuthServerUrl  string
 	TokenTtlSecond int
+	ShortUrlPrefix string
 	Db             *DbConfig
 }
 
