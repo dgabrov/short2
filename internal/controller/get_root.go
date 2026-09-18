@@ -10,8 +10,8 @@ func (c *Controller) getRoot(w http.ResponseWriter, r *http.Request) {
 		ViewHeader: ui.ViewHeader{
 			Login:    "",
 			FullName: "",
-			Title:    "",
-			Context:  "",
+			Title:    "Login",
+			Context:  c.configData.Context,
 			Error:    "",
 		},
 		Login: "",

@@ -33,10 +33,13 @@ func (c *Controller) postLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Controller) processPostLogin(w http.ResponseWriter, r *http.Request) error {
-	form := r.Form
+	err := r.ParseForm()
+	if err != nil {
+		return err
+	}
 
-	login := form.Get("login")
-	password := form.Get("password")
+	login := r.FormValue("login")
+	password := r.FormValue("password")
 
 	login = strings.TrimSpace(login)
 	password = strings.TrimSpace(password)

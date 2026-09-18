@@ -1,7 +1,7 @@
 {{define "content"}}
 <div class="content">
     <h2>Login</h2>
-    <form action="/login">
+    <form action="{{.Context}}/login" method="post">
         <table>
             <tr>
                 <td>Login:</td>
