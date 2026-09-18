@@ -34,7 +34,7 @@ func StartServer(cfg *data.ConfigData, db *sql.DB, templates map[string]*templat
 	mux.Handle("GET "+ctx+"/static/", http.StripPrefix(ctx, ui.StaticHandler()))
 	mux.HandleFunc("GET "+ctx+"/", ctrl.getRoot)
 	mux.HandleFunc("GET "+ctx+"/logout", ctrl.getLogout)
-	mux.HandleFunc("GET "+ctx+"/go{id}", ctrl.getGo)
+	mux.HandleFunc("GET "+ctx+"/go/{id}", ctrl.getGo)
 	mux.HandleFunc("POST "+ctx+"/login", ctrl.postLogin)
 	mux.HandleFunc("POST "+ctx+"/", ctrl.postShorten)
 

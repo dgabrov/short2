@@ -71,7 +71,7 @@ func (s Server) GetUserIdByTokenAndAdvance(token string) (string, error) {
 	var expiryDt time.Time
 	var expiredInd string
 
-	err := s.db.QueryRow("select person_id, expiry_dt, expired_ind from session where token = ?").Scan(&userID, &expiryDt, &expiredInd)
+	err := s.db.QueryRow("select person_id, expiry_dt, expired_ind from session where token = ?", token).Scan(&userID, &expiryDt, &expiredInd)
 	if err != nil {
 		return "", err
 	}
@@ -138,7 +138,7 @@ func (s Server) ShortenAndSave(userID string, longUrl string) (string, error) {
 
 		shortened = string(runes)
 
-		rs, err := s.db.Query("select url_id from urls where shortened_code = ?", runes)
+		rs, err := s.db.Query("select url_id from urls where shortened_code = ?", string(runes))
 		if err != nil {
 			return "", err
 		}

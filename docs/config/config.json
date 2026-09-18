@@ -3,7 +3,7 @@
   "context": "/short",
   "authServerUrl" : "https://cbox.info/abax/loginNoToken",
   "tokenTtlSecond" : 3600,
-  "shortUrlPrefix" : "https://cbox.info/s/",
+  "shortUrlPrefix" : "http://localhost:8080",
   "db": {
     "machine": "localhost",
     "port": 3306,

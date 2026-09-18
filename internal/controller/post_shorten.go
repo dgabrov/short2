@@ -12,8 +12,10 @@ func (c *Controller) postShorten(w http.ResponseWriter, r *http.Request) {
 	header, _, err := c.processToken(r)
 	if err != nil {
 		_ = ui.RenderLogin(w, c.templates, &ui.LoginView{
-			ViewHeader: ui.ViewHeader{},
-			Login:      "",
+			ViewHeader: ui.ViewHeader{
+				Context: c.configData.Context,
+			},
+			Login: "",
 		})
 
 		return
@@ -38,10 +40,9 @@ func (c *Controller) postShorten(w http.ResponseWriter, r *http.Request) {
 
 	servr := server.NewServer(c.configData, c.db)
 	shortUrl, err := servr.ShortenAndSave(userID, longUrl)
-
-	shortUrl = fmt.Sprintf("%s%s/%s", c.configData.ShortUrlPrefix, c.configData.Context, shortUrl)
-
 	if err != nil {
+		header.Error = err.Error()
+
 		_ = ui.RenderAddUrl(w, c.templates, &ui.AddUrlView{
 			ViewHeader: *header,
 			LongUrl:    longUrl,
@@ -49,4 +50,13 @@ func (c *Controller) postShorten(w http.ResponseWriter, r *http.Request) {
 			ShortUrl:   shortUrl,
 		})
 	}
+
+	shortUrl = fmt.Sprintf("%s%s/go/%s", c.configData.ShortUrlPrefix, c.configData.Context, shortUrl)
+
+	_ = ui.RenderAddUrl(w, c.templates, &ui.AddUrlView{
+		ViewHeader: *header,
+		LongUrl:    longUrl,
+		ShowShort:  true,
+		ShortUrl:   shortUrl,
+	})
 }
