@@ -105,6 +105,14 @@ func (c *Controller) processPostLogin(w http.ResponseWriter, r *http.Request) er
 		return err
 	}
 
+	// save the http cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     cookieName,
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+	})
+
 	_ = ui.RenderAddUrl(w, c.templates, &ui.AddUrlView{
 		ViewHeader: ui.ViewHeader{
 			Login:    loginAuthData.Login,

@@ -2,11 +2,15 @@ package controller
 
 import (
 	"database/sql"
+	"errors"
 	"html/template"
 	"net/http"
 	"short2/internal/data"
+	"short2/internal/server"
 	"short2/internal/ui"
 )
+
+const cookieName = "jCookShort2"
 
 type Controller struct {
 	configData *data.ConfigData
@@ -30,9 +34,45 @@ func StartServer(cfg *data.ConfigData, db *sql.DB, templates map[string]*templat
 	mux.Handle("GET "+ctx+"/static/", http.StripPrefix(ctx, ui.StaticHandler()))
 	mux.HandleFunc("GET "+ctx+"/", ctrl.getRoot)
 	mux.HandleFunc("GET "+ctx+"/logout", ctrl.getLogout)
-	mux.HandleFunc("GET "+ctx+"/go", ctrl.getGo)
+	mux.HandleFunc("GET "+ctx+"/go{id}", ctrl.getGo)
 	mux.HandleFunc("POST "+ctx+"/login", ctrl.postLogin)
 	mux.HandleFunc("POST "+ctx+"/", ctrl.postShorten)
 
 	return http.ListenAndServe(cfg.ServerAddress, mux)
+}
+
+func (c *Controller) processToken(r *http.Request) (*ui.ViewHeader, string, error) {
+	// get the cookie
+	cookie, err := r.Cookie(cookieName)
+	if err != nil {
+		if errors.Is(err, http.ErrNoCookie) {
+			return nil, "", errors.New("Not logged in")
+		} else {
+			return nil, "", errors.New("Error while retrieving the cookie")
+		}
+	}
+
+	token := cookie.Value
+
+	servr := server.NewServer(c.configData, c.db)
+
+	userId, err := servr.GetUserIdByTokenAndAdvance(token)
+
+	if err != nil {
+		return nil, "", err
+	}
+
+	person, err := servr.GetUserById(userId)
+	if err != nil {
+		return nil, "", err
+	}
+
+	return &ui.ViewHeader{
+		Login:    person.Login,
+		FullName: person.FullName,
+		Title:    "",
+		Context:  c.configData.Context,
+		Error:    "",
+		UserID:   person.ID,
+	}, token, nil
 }

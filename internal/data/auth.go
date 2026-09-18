@@ -11,3 +11,10 @@ type LoginData struct {
 	Login    string
 	Password string
 }
+
+type Person struct {
+	ID         string
+	Login      string
+	FullName   string
+	ProvidedID string
+}

@@ -30,6 +30,7 @@ type ViewHeader struct {
 	Title    string
 	Context  string
 	Error    string
+	UserID   string
 }
 
 func (c *ViewHeader) IsLoggedIn() bool {

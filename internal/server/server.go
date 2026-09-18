@@ -60,6 +60,36 @@ func (s Server) CreateUser(userId string, login string, name string, providedId 
 	return err
 }
 
+func (s Server) GetUserIdByTokenAndAdvance(token string) (string, error) {
+	// TODO
+	return "", nil
+}
+
+func (s Server) GetUserById(userId string) (*data.Person, error) {
+	// TODO
+	return nil, nil
+}
+
+func (s Server) ExpireSessionByToken(token string) error {
+	// TODO
+	return nil
+}
+
+func (s Server) GetUrlByShortID(shortID string) (string, error) {
+	// TODO
+	return "", nil
+}
+
+func (s Server) GetUserIdByToken() (string, error) {
+	// TODO
+	return "", nil
+}
+
+func (s Server) ShortenAndSave(userID string, longUrl string) (string, error) {
+	// TODO
+	return "", nil
+}
+
 func NewServer(cfg *data.ConfigData, db *sql.DB) *Server {
 	return &Server{db, cfg}
 }
