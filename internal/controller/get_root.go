@@ -1,29 +1,21 @@
 package controller
 
 import (
-	"log/slog"
 	"net/http"
 	"short2/internal/ui"
 )
 
 func (c *Controller) getRoot(w http.ResponseWriter, r *http.Request) {
-	data := ui.AddUrlView{
+	data := ui.LoginView{
 		ViewHeader: ui.ViewHeader{
 			Login:    "",
-			FullName: "Buben Lampa",
-			Title:    "De title here",
-			Context:  "short",
-			Error:    "the error message should stay here corrected",
+			FullName: "",
+			Title:    "",
+			Context:  "",
+			Error:    "",
 		},
-		LongUrl:   "laila",
-		ShowShort: true,
-		ShortUrl:  "http://lampa.org?here",
+		Login: "",
 	}
 
-	err := ui.RenderAddUrl(w, c.templates, &data)
-
-	if err != nil {
-		slog.Info(err.Error())
-	}
-
+	_ = ui.RenderLogin(w, c.templates, &data)
 }

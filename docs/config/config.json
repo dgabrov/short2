@@ -1,6 +1,8 @@
 {
   "serverAddress": "localhost:8080",
   "context": "/short",
+  "authServerUrl" : "https://cbox.info/abax/loginNoToken",
+  "tokenTtlSecond" : 3600,
   "db": {
     "machine": "localhost",
     "port": 3306,

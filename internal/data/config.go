@@ -1,9 +1,11 @@
 package data
 
 type ConfigData struct {
-	ServerAddress string
-	Context       string
-	Db            *DbConfig
+	ServerAddress  string
+	Context        string
+	AuthServerUrl  string
+	TokenTtlSecond int
+	Db             *DbConfig
 }
 
 type DbConfig struct {
