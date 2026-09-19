@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"html/template"
+	"log"
 	"net/http"
 	"short2/internal/data"
 	"short2/internal/server"
@@ -38,7 +39,32 @@ func StartServer(cfg *data.ConfigData, db *sql.DB, templates map[string]*templat
 	mux.HandleFunc("POST "+ctx+"/login", ctrl.postLogin)
 	mux.HandleFunc("POST "+ctx+"/", ctrl.postShorten)
 
-	return http.ListenAndServe(cfg.ServerAddress, mux)
+	return http.ListenAndServe(cfg.ServerAddress, NotFoundLoggerMiddleware(mux))
+}
+
+type statusRecorder struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+func (rec *statusRecorder) WriteHeader(code int) {
+	rec.statusCode = code
+	rec.ResponseWriter.WriteHeader(code)
+}
+
+// NotFoundLoggerMiddleware logs requests that result in a 404 status
+func NotFoundLoggerMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Default to 200 OK if WriteHeader isn't explicitly called
+		rec := &statusRecorder{ResponseWriter: w, statusCode: http.StatusOK}
+
+		next.ServeHTTP(rec, r)
+
+		// Check if the response resulted in a 404
+		if rec.statusCode == http.StatusNotFound {
+			log.Printf("[404 NOT FOUND] Method: %s | URL: %s | RemoteAddr: %s", r.Method, r.URL.Path, r.RemoteAddr)
+		}
+	})
 }
 
 func (c *Controller) processToken(r *http.Request) (*ui.ViewHeader, string, error) {
