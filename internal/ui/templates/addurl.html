@@ -7,7 +7,7 @@
                 <td>Url: <input type="text" name="longUrl" value="{{.LongUrl}}"></td>
             </tr>
             <tr>
-                <td>Shortened: {{if .ShowShort}}<span class="short" id="copySpan">{{.ShortUrl}}</span> <a href="#" onclick="copyText()">Copy</a>{{else}}&nbsp;{{end}}</td>
+                <td>Shortened: {{if .ShowShort}}<span class="short" id="copySpan">{{.ShortUrl}}</span>&nbsp;&nbsp;&nbsp;<a href="#" onclick="copyText()">Copy</a>{{else}}&nbsp;{{end}}</td>
             </tr>
             <tr>
                 <td><button type="submit">Shorten</button></td>

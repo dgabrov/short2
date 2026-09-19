@@ -1,10 +1,11 @@
 create table person
 (
-    person_id varchar(64)             not null
+    person_id   varchar(64)             not null
         primary key,
-    login     varchar(64)             not null,
-    full_name varchar(255) default '' not null
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    login       varchar(64)             not null,
+    full_name   varchar(255) default '' not null,
+    provided_id varchar(64)             null
+)CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 create table session
 (

@@ -3,6 +3,7 @@ package server
 import (
 	"database/sql"
 	"errors"
+	"short2/internal/constants"
 	"short2/internal/data"
 	"strings"
 	"time"
@@ -131,10 +132,10 @@ func (s Server) ShortenAndSave(userID string, longUrl string) (string, error) {
 	var shortened string
 	errorSituation := true
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < constants.AttemptIterations; i++ {
 		shortened = uuid.Must(uuid.NewRandom()).String()
 		runes := []rune(shortened)
-		runes = runes[:8]
+		runes = runes[:constants.NumberCharacters]
 
 		shortened = string(runes)
 
