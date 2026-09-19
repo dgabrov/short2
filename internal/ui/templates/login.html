@@ -1,0 +1,22 @@
+{{define "content"}}
+<div class="content">
+    <h2>Login</h2>
+    <form action="{{.Context}}/login" method="post">
+        <table>
+            <tr>
+                <td>Login:</td>
+                <td><input name="login" type="text" value="{{.Login}}"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input name="password" type="password"></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{{end}}

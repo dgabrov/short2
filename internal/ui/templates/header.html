@@ -1,0 +1,35 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shortener - {{.Title}}</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div class="header">
+    <div class="left">
+        <span class="icon"></span>
+        URL Shortener {{if .IsLoggedIn}}<a href="{{.Context}}/logout">logout</a>{{end}}
+    </div>
+    <div class="right">{{if .IsLoggedIn}}{{.FullName}} ({{.Login}}){{else}}not logged in{{end}}</div>
+</div>
+{{if .Error}}
+<div class="error">
+    {{.Error}}
+</div>
+{{end}}
+{{template "content" .}}
+</body>
+</html>
+<script>
+    function copyText() {
+        // 1. Get the text content from the span
+        const textToCopy = document.getElementById("copySpan").innerText;
+
+        // 2. Write it to the system clipboard
+        navigator.clipboard.writeText(textToCopy);
+    }
+</script>
+
+{{end}}
